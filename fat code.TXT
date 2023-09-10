@@ -1,0 +1,47 @@
+///nhiều task giống nhau :
+  const displayedDataKey = {
+    1: "DossierNew",
+    2: "DossierRecall",
+    3: "DossierReIssue",
+    4: "DossierRenew",
+    5: "DossierChangInfor",
+  }
+
+  const displayedData = data?.[displayedDataKey[type]]
+    ? data?.[displayedDataKey[type]].slice(0, displayedDataCount)
+    : []
+  const title = {
+    1: "Cấp mới hồ sơ",
+    2: "hu hồi hồ sơ",
+    3: "Cấp lại hồ sơ",
+    4: "Gia hạn hồ sơ",
+    5: "Hồ sơ thay đổ",
+  }[type]
+
+//có thể viết như này nữa và lấy trực tiếp displayedDataKey và chuyển mỗi[displayedDataKey thay vì displayedDataKey[type]
+  const displayedDataKey = {
+    1: "DossierNew",
+    2: "DossierRecall",
+    3: "DossierReIssue",
+    4: "DossierRenew",
+    5: "DossierChangInfor",
+  }[type]
+
+//có thể dung :[displayedDataKey[type]] sau render để lấy dữ liệu logic ////NHỚ PHẢI DUNG [] CHO [displayedDataKey vì chuyển kiểu mảng
+//Navigate chuyển trang và chuyền start:
+                navigate(ROUTER.TIM_KIEM, { state: { TextSearch } })
+
+
+//fat khi chuyền dữ liệu từ prop và muốn truy cập vào dữ liệu trong prop được truyền đó nhớ dùng[] khi chuyền
+  const displayedDataKey1 = {
+    1: () => overView?.NumberDossierNew,
+    2: () => overView?.NumberDossierRecall,
+    3: () => overView?.NumberDossierReIssue,
+    4: () => overView?.NumberDossierRenew,
+    5: () => overView?.NumberDossierChangeInfor,
+  }[type]
+///đôi khi lỗi vì nhiều table có thể chưa chuyền hết prop nhớ check
+
+///Tìm kiếm khi một Objec có thêm value và muốn lấy NymberDossier theo value
+            {count?.find(item => item?.CodeValue === valueCount)
+              ?.NumberDossier || valueCount}

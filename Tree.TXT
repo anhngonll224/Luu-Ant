@@ -1,0 +1,37 @@
+          <Tree
+            defaultExpandAll
+            treeData={listDept}
+            selectedKeys={[selectedNode?.key]}
+            onSelect={(_, e) => setSelectedNote(e?.node)}
+            titleRender={(nodeData, idx) => {
+              return (
+                <div key={idx + 1} className="d-flex align-items-center">
+                  {nodeData.title}
+                  {keyId > 0 && (
+                    <div className="list-button">
+                      {ACTION?.filter(i => !!i?.visible).map(value => (
+                        <ButtonCircle
+                          style={{ margin: "0 5px" }}
+                          title={value.title}
+                          key={value.icon}
+                          iconName={value.icon}
+                          onClick={() => {
+                            value.onClick(nodeData)
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            }}
+          />
+
+//Custom 
+        <Col style={{ width: 300 }}>
+          <ListAddress
+            getNoAddress={true}
+            setAddressSelect={setAddressSelect}
+            addressSelect={addressSelect}
+          />
+        </Col>

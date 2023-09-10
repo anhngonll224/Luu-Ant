@@ -1,0 +1,32 @@
+       {purposeUseDescription  (
+          purposeUseDescription
+        )  (
+          spanKhông có dữ liệuspan
+        )}
+// bổ sung :                    onSearch={TextSearch => {
+                      TextSearch.length > 0
+                        ? navigate(ROUTER.TIM_KIEM, { state: { TextSearch } })
+                        : Notice({
+                          isSuccess: false,
+                          msg: "Hãy nhập tên định danh",
+                        });
+                    }}
+
+
+
+///Hoàn hảo :           
+	 {isShowText ? <div>ok</div> : <div>not ok</div>}
+            {isShowText && <div>ok</div>}
+
+            {!isShowText && (
+                <div>not ok</div>
+            )}
+
+if:nghĩa là sau một loạt điều kiện if mà dùng đk ngược cho clear song chả về cuối cùng mk muốn nếu rơi vào 1 trong các điều kiên ig thi ko console.log rồi không chả về gì
+if(!login){
+console.log('ádfsadf')
+return;}
+....
+openModal();
+
+

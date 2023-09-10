@@ -1,0 +1,8 @@
+    {
+      title: "Mã hồ sơ",
+      dataIndex: "DossierCodeDisplay",
+      key: "DossierCodeDisplay",
+      render: (value, record) => (
+        <a onClick={() => setOpenDetail(record)}>{value}</a>
+      ),
+    },

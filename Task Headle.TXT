@@ -1,0 +1,32 @@
+      <Tabs
+        type="card"
+        defaultActiveKey="1"
+        // defaultActiveKey="1"
+        activeKey={pagination?.Procedure}
+        onChange={i => {
+          setPagination({
+            ...pagination,
+            CurrentPage: 1,
+            Procedure: i,
+          })
+        }}
+        items={[
+          {
+            label: `Tất cả(${
+              data?.Count?.find(item => item?.CodeValue === 0)?.NumberDossier ||
+              0
+            })`,
+            key: 0,
+          },
+          ...getListComboByKey(
+            SYSTEM_KEY?.DOSSIER_PROCEDURE_TYPE,
+            listSystemKey,
+          )?.map(i => ({
+            label: `${i.Description} (${
+              data?.Count?.find(item => item?.CodeValue === i?.CodeValue)
+                ?.NumberDossier || 0
+            })`,
+            key: i.CodeValue,
+          })),
+        ]}
+      />

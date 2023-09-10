@@ -1,0 +1,49 @@
+//SystemKey kiểu Objec chả về số và render ra chữ với viewDetail?.ltAnticipatedNetwork? là dữ liệu API chả về và chọc và thằng mà nó muốn lấy ra và map để so sánh với các thành phần trong list SystemKey và lấy ra dcripstion
+ {/* {viewDetail?.ltAnticipatedNetwork?.map((item, idx) => (
+                      <span key={`ltAnticipatedNetwork${idx}`}>
+                        {
+                          getListComboByKey(
+                            SYSTEM_KEY?.DOSSIER_NETWORK,
+                            listSystemKey,
+                          )?.find(
+                            i => i.CodeValue === item?.AnticipatedNetwork,S
+                          )?.Description
+                        }
+                        ,{" "}
+                      </span>
+                    ))} */}
+                    {viewDetail?.ltAnticipatedNetwork?.map((item, idx) => {
+                      const networkDescription = listSystemKey?.find(
+                        i => i.CodeValue === item,
+                      )?.Description
+                      return (
+                        <span key={`ltAnticipatedNetwork${idx}`}>
+                          {networkDescription},{" "}
+                        </span>
+                      )
+                    })}
+////
+ {viewDetail?.ltAnticipatedNetwork?.map((item, idx) => (
+                      <span key={`ltAnticipatedNetwork${idx}`}>
+                        {getListComboByKey(
+                          SYSTEM_KEY?.DOSSIER_NETWORK,
+                          listSystemKey,
+                        )?.map(i => {
+                          if (i.CodeValue === item) {
+                            return (
+                              <span>
+                                {i?.Description}
+                                {", "}
+                              </span>
+                            )
+                          }
+                        })}
+                        {console.log(
+                          "a",
+                          getListComboByKey(
+                            SYSTEM_KEY?.DOSSIER_NETWORK,
+                            listSystemKey,
+                          ),
+                        )}
+                      </span>
+                    ))}

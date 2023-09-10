@@ -1,0 +1,15 @@
+  const inputValue = useSelector((state) => state.app.inputValue);
+  const dispatch = useDispatch();
+//thực hiện mật handle khi click và gửi dữ liệu vào dispassh //DossierID nó là handle phải import từ redux
+
+
+  const Handle = (record) => {
+    setOpenDetail(record)
+    dispatch(
+      DossierID({
+        DossierID: record.DossierID,
+      })
+    );
+  }
+//lấy ra dữ liều từ   innitstate từ ProfileList
+const { DossierID } = useSelector(state => state.ProfileList)

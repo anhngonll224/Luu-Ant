@@ -1,0 +1,390 @@
+//CHUYỀN RECOD CHO CÁC HANDLE VÀ ID CỦA TABLE CHO NÓ ĐỂ THỤC HIỆN THÊM XÓA CHỈNH SỬA
+ render: (_, record) => (
+        <div>
+          <div
+            style={{
+              textAlign: "center",
+              width: "100%",
+              fontWeight: "bold",
+              color:
+                StatusDossierColor?.[record?.Procedure - 1]?.[record?.StatusID],
+            }}
+          >
+            {console.log(record)}
+            {record?.StatusName}
+          </div>
+          <FloatActionWrapper size="small" className="float-action__wrapper">
+            <Space>
+              {/* cá nhân */}
+              {!!record?.ButtonShow?.IsUpdate && (
+                <ButtonCircle
+                  title="Chỉnh sửa"
+                  iconName="edit-green"
+                  onClick={() => {
+                    setOpenUpdate(true)
+                  }}
+                />
+              )}
+              {!!record?.ButtonShow?.IsDelete && (
+                <ButtonCircle
+                  title="Xóa"
+                  iconName="delete-red-row"
+                  onClick={() => {
+                    CB1({
+                      title: `Bạn có chắc chắn muốn xoá
+                                      <strong> ${record?.NameRegister}</strong> không?`,
+                      icon: "warning-usb",
+                      okText: "Đồng ý",
+                      onOk: async close => {
+                        onDeleteUser(record?.DossierID)
+                        close()
+                      },
+                    })
+                  }}
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsSend && (
+                <ButtonCircle
+                  title="Gửi hồ sơ"
+                  iconName="send-mess-primary"
+                  onClick={() => {
+                    sendDossier(record?.DossierID)
+                  }}
+                />
+              )}
+              {!!record?.ButtonShow?.IsRecallSend && (
+                <ButtonCircle
+                  title="Thu hồi hồ sơ"
+                  onClick={() => {
+                    recallSendDossier(record?.DossierID)
+                  }}
+                  iconName="restore"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsChangeInfor && (
+                <ButtonCircle
+                  title="Thay đổi thông tin"
+                  iconName="word-update-green"
+                  onClick={() => {
+                    window.scrollTo(0, 0)
+                    navigate(ROUTER.TAO_HO_SO, {
+                      state: { ...record, IsChangeInfor: true },
+                    })
+                  }}
+                />
+              )}
+
+              {/* chuyên viên */}
+              {!!record?.ButtonShow?.IsAccept && (
+                <ButtonCircle
+                  title="Tiếp nhận hồ sơ"
+                  onClick={() => {
+                    acceptDossier(record?.DossierID)
+                  }}
+                  iconName="checks"
+                />
+              )}
+              {!!record?.ButtonShow?.IsRefuse && (
+                <ButtonCircle
+                  title="Từ chối tiếp nhận hồ sơ"
+                  onClick={() => {
+                    // setOpenModalRefuseDossier({
+                    //   DossierID: record?.DossierID,
+                    // })
+                    setOpenModelRessonDossier({
+                      DossierID: record?.DossierID,
+                      title: "Từ chối tiếp nhận hồ sơ",
+                      titleItem: "Lý do từ chối",
+                      nameItem: "Reason",
+                      requestHandle: Dossier.refuseDossier,
+                    })
+                  }}
+                  iconName="cancel"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsRequestAdditional && (
+                <ButtonCircle
+                  title="Yêu cầu bổ sung"
+                  onClick={() => {
+                    // setOpenModalAdditionalDossier({
+                    //   DossierID: record?.DossierID,
+                    // })
+
+                    setOpenModelRessonDossier({
+                      DossierID: record?.DossierID,
+                      title: "Yêu cầu bổ sung hồ sơ",
+                      titleItem: "Các yêu cầu bổ sung",
+                      nameItem: "Content",
+                      requestHandle: Dossier.requestAdditionalDossier,
+                    })
+                  }}
+                  iconName="notepad"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsPass && (
+                <ButtonCircle
+                  title="Hồ sơ đạt"
+                  onClick={() => {
+                    passDossier([record?.DossierID])
+                  }}
+                  iconName="liked"
+                />
+              )}
+              {!!record?.ButtonShow?.IsAdditional && (
+                <ButtonCircle
+                  title="Bổ sung"
+                  onClick={() => {
+                    setOpenConfirm(true)
+                  }}
+                  iconName="plus-circle"
+                />
+              )}
+              {!!record?.ButtonShow?.IsRenew && (
+                <ButtonCircle
+                  title="Gia hạn GCN"
+                  onClick={() => {
+                    renewDossier(record?.DossierID)
+                  }}
+                  iconName="history"
+                />
+              )}
+              {!!record?.ButtonShow?.IsReIssue && (
+                <ButtonCircle
+                  title="Cấp lại GCN"
+                  iconName="undo"
+                  onClick={() => {
+                    reIssueDossier(record?.DossierID)
+                  }}
+                />
+              )}
+
+              {/* {!!record?.ButtonShow?.IsReturn && (
+                <ButtonCircle
+                  title="Nhận GCN"
+                  onClick={() => {}}
+                  iconName="handout-2"
+                />
+              )} */}
+
+              {!!record?.ButtonShow?.IsPayment && (
+                <ButtonCircle
+                  title="Nộp lệ phí"
+                  onClick={() => {
+                    setCount([record])
+                    setOpenModalPayment(record)
+                  }}
+                  iconName="credit-card"
+                />
+              )}
+              {!!record?.ButtonShow?.IsPayment && (
+                <ButtonCircle
+                  title="Xem khiếu nại"
+                  onClick={() => {
+                    setOpenComplain(record)
+                  }}
+                  iconName="eye_orange"
+                />
+              )}
+              {!!record?.ButtonShow?.IsReport && (
+                <ButtonCircle
+                  title="Báo cáo lỗi thanh toán"
+                  onClick={() => {
+                    setOpenModalPaymentReport(record)
+                  }}
+                  iconName="warningCKS"
+                />
+              )}
+              {!!record?.ButtonShow?.IsReturn && (
+                <ButtonCircle
+                  title="Rút hồ sơ"
+                  onClick={() => {
+                    setOpenModelRessonDossier({
+                      DossierID: record?.DossierID,
+                      title: "Rút hồ sơ",
+                      titleItem: "Lý do rút hồ sơ",
+                      nameItem: "Reason",
+                      requestHandle: Dossier.returnFromUserDossier,
+                    })
+                  }}
+                  iconName="box-confirm"
+                />
+              )}
+              {/* chuyên viên */}
+
+              {!!record?.ButtonShow?.IsSubmission && (
+                <ButtonCircle
+                  title="Trình phê duyệt"
+                  onClick={() => {
+                    setOpenBrowseRequest(true)
+                    setCount([record])
+                  }}
+                  iconName="transfer"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsRecallRefuse && (
+                <ButtonCircle
+                  title="Thu hồi từ chối hồ sơ"
+                  onClick={() => {
+                    recallRefuseDossier(record?.DossierID)
+                  }}
+                  iconName="restore"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsAcceptReturn && (
+                <ButtonCircle
+                  title="Trả hồ sơ"
+                  onClick={() => {
+                    returnDossier(record)
+                  }}
+                  iconName="iconSigned"
+                />
+              )}
+              {!!record?.ButtonShow?.IsRefuseReturn && (
+                <ButtonCircle
+                  title="Từ chối rút hồ sơ"
+                  onClick={() => {
+                    // refuseReturn(record)
+
+                    setOpenModelRessonDossier({
+                      DossierID: record?.DossierID,
+                      title: "Từ chối rút hồ sơ",
+                      titleItem: "Lý do từ chối",
+                      nameItem: "Reason",
+                      requestHandle: Dossier.refuseReturnDossier,
+                    })
+                  }}
+                  iconName="cancel-video"
+                />
+              )}
+              {/* lãnh đạo trung tâm ,Lãnh đạo cục*/}
+
+              {!!record?.ButtonShow?.IsAprove && (
+                <ButtonCircle
+                  title="Duyệt hồ sơ"
+                  onClick={() => {
+                    approveDossier([record?.DossierID])
+                  }}
+                  iconName="elect"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsRefuseAprove && (
+                <ButtonCircle
+                  title="Không duyệt hồ sơ"
+                  onClick={() => {
+                    setOpenModelRessonDossier({
+                      DossierID: record?.DossierID,
+                      title: "Từ chối duyệt hồ sơ",
+                      titleItem: "Lý do từ chối",
+                      nameItem: "Reason",
+                      requestHandle: Dossier.refuseApproveDossier,
+                    })
+                  }}
+                  iconName="fall"
+                />
+              )}
+              {!!record?.ButtonShow?.IsRecallAprove && (
+                <ButtonCircle
+                  title="Thu hồi duyệt hồ sơ"
+                  onClick={() => {
+                    recallAproveDossier(record?.DossierID)
+                  }}
+                  iconName="restore"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsExpertise && (
+                <ButtonCircle
+                  title="Ký duyệt GCN"
+                  onClick={() => {
+                    expertiseDossier([record?.DossierID])
+                  }}
+                  iconName="file-sign"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsRefuseExpertise && (
+                <ButtonCircle
+                  title="Không duyệt GCN"
+                  onClick={() => {
+                    setOpenModelRessonDossier({
+                      DossierID: record?.DossierID,
+                      title: "Từ chối duyệt giấy chứng nhận",
+                      titleItem: "Lý do từ chối",
+                      nameItem: "Reason",
+                      requestHandle: Dossier.refuseExpertiseDossier,
+                    })
+                  }}
+                  iconName="fall"
+                />
+              )}
+              {!!record?.ButtonShow?.IsRecallAprove && (
+                <ButtonCircle
+                  title="Thu hồi ký duyệt"
+                  onClick={() => {
+                    recallPromulgateDossier(record?.DossierID)
+                  }}
+                  iconName="restore"
+                />
+              )}
+
+              {/* Văn thư cục */}
+
+              {/* {!!record?.ButtonShow?.IsRecallPromulga && (
+                <ButtonCircle
+                  title="Thu hồi ban hành GCN"
+                  onClick={() => {
+                  }}
+                  iconName="restore"
+                />
+              )} */}
+              {!!record?.ButtonShow?.IsPromulgate && (
+                <ButtonCircle
+                  title="Ban hành GCN"
+                  onClick={() => {
+                    promulgateDossier({
+                      LtDossier: [record?.DossierID],
+                    })
+                  }}
+                  iconName="media-solid"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsPromulgateRecall && (
+                <ButtonCircle
+                  title="Ban hành thông báo thu hồi"
+                  onClick={() => {
+                    promulgateRecallDossier([record?.DossierID])
+                  }}
+                  iconName="vbm"
+                />
+              )}
+              {!!record?.ButtonShow?.IsPromulgateRenew && (
+                <ButtonCircle
+                  title="Ban hành thông báo gia hạn"
+                  onClick={() => {
+                    promulgateRenewDossier([record?.DossierID])
+                  }}
+                  iconName="menu-log-work"
+                />
+              )}
+
+              {!!record?.ButtonShow?.IsRecall && (
+                <ButtonCircle
+                  title="Thu hồi tên định danh"
+                  onClick={() => {
+                    recallDossier(record?.DossierID)
+                  }}
+                  iconName="re-post"
+                />
+              )}
+            </Space>
+          </FloatActionWrapper>
+        </div>
+      ),

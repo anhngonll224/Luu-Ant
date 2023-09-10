@@ -1,0 +1,49 @@
+  const GetDetail = async () => {
+    try {
+      setLoading(true)
+      const res = await Dossier.getDetail(dataDetail?.DossierID)
+      if (res?.isError) return
+      setViewDetail(res?.Object?.Data)
+    } finally {
+      setLoading(false)
+    }
+  }
+//FULL
+ const insertTag = async () => {
+    setLoading(true)
+
+    try {
+      const values = await form?.validateFields()
+      const res = await FieldService[dataEdit ? "update" : "insert"]({
+        ...values,
+        FieldID: dataEdit?.FieldID,
+        // Type: 1,
+      })
+      if (res?.isError) return
+      Notice({ msg: `${dataEdit ? "Cập nhật" : "Thêm"} thẻ thành công !` })
+      getListTags()
+      form.resetFields()
+      setDataEdit(undefined)
+    } finally {
+      setLoading(false)
+    }
+  }
+//c2
+  const Getlist = async () => {
+    setLoading(true)
+    try {
+
+      const res = await DashBoard.getList({
+        FromDate: date.DateFrom,
+        ToDate: date.DateFrom,
+      })
+
+      if (res?.isError) return
+
+      setOverView(res?.Object?.Data)
+      setData(res?.Object.Preview)
+      setCount(res?.Object?.Count)
+    } finally {
+      setLoading(false)
+    }
+  }

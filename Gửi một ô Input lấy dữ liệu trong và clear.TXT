@@ -1,0 +1,29 @@
+value là dữ liệu ô input được nhập vào clearComment là clear ô input đi sau khi gửi res thành công
+  const [comment, setComment] = useState('');
+
+const clearComment = () => {
+    setComment(''); // Đặt giá trị của comment thành chuỗi rỗng để làm trống ô nhập liệu
+  };
+
+const commentDossier = async () => {
+    try {
+      setLoading(true)
+      const res = await Dossier.commentDossier(
+        {
+          Content: comment,
+          DossierID: DossierID.DossierID
+        }
+      )
+      if (res?.isError) return
+      clearComment();
+      // setViewDetail(res?.Object?.Data)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+       <Row className=" p-10">
+            <TextArea value={comment} onChange={(e) => setComment(e.target.value)} Row={4} placeholder="Nhận xét của bạn"></TextArea>
+          </Row>
+          <Row className="d-flex-end pt-10">
+            <Button btnType="primary" onClick={commentDossier}>Gửi nhận xét</Button>

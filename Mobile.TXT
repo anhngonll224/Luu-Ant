@@ -1,0 +1,11 @@
+                              className={`fw-600  ${UseWindowSize.isMobile() ? "fs-12" : "fs-16"
+                                }`}
+//khi mobile thì mới hiện :
+   {UseWindowSize.isMobile() && (<Col span={4}></Col>)}
+@media only screen and (max-width: 480px) {}
+@media only screen and (min-width: 480px) {}
+ style={{
+              width: isMobile ? "300px" : "500px",
+              float: isMobile ? "right" : "right",
+              marginLeft: !isMobile ? "30px" : "30px",
+            }}

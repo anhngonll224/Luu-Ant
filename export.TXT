@@ -1,0 +1,24 @@
+nhớ xem res chả về file nằm ở đâu  
+const exportList = () => {
+    setLoading(true)
+    ActivityApi.exportList({
+      ...pagination,
+    })
+      .then(res => {
+        if (res?.isError) return
+        saveAs(res, "Lich_su_hoat_dong.xlsx")
+      })
+      .finally(() => setLoading(false))
+  }
+//
+  const exportUser = () => {
+    setLoading(true)
+    Dossier.ExportData({
+      DateFrom: "",
+    })
+      .then(res => {
+        if (res?.isError) return
+        saveAs(res.Object, "danh sách hồ sơ.xlsx")
+      })
+      .finally(() => setLoading(false))
+  }

@@ -1,0 +1,11 @@
+                <FlDatePicker
+                  allowClear
+                  ranger
+                  label={["Từ ngày", "Đến ngày"]}
+                  onChange={date =>
+                    setDate({
+                      DateFrom: date ? date[0].format() : null,
+                      DateTo: date ? date[1].format() : null,
+                    })
+                  }
+                />

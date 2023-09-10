@@ -1,0 +1,4 @@
+       info.fileList.map(i => ({
+          ...i,
+          FileName: i.FileName ? i.FileName : i.name,
+        })),
